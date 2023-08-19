@@ -63,8 +63,8 @@ func DisableJsonLogger() {
 	jsonEnabled = false
 }
 
-// GetLogger returns the default logger.
-func GetLogger() *Logger {
+// Default returns the default logger.
+func Default() *Logger {
 	return &logger
 }
 
