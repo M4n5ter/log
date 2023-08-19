@@ -54,17 +54,39 @@ func (l *Logger) Errorf(format string, args ...any) {
 	handle(l, r, slog.LevelError)
 }
 
-// With works like slog.Logger.With
+// With works like `slog.Logger.With`.
+//
+// It returns a new `Logger` whatever the inner Logger is enabled or not, if both text and json are nil, it returns the original `Logger`.
 func (l *Logger) With(args ...any) *Logger {
-	text := l.text.With(args...)
-	json := l.json.With(args...)
+	if l.text == nil && l.json == nil {
+		return l
+	}
+
+	var text, json *slog.Logger
+	if l.text != nil {
+		text = l.text.With(args...)
+	}
+	if l.json != nil {
+		json = l.json.With(args...)
+	}
 	return &Logger{text: text, json: json}
 }
 
-// WithGroup works like slog.Logger.WithGroup
+// WithGroup works like `slog.Logger.WithGroup`
+//
+// It returns a new `Logger` whatever the inner Logger is enabled or not, if both text and json are nil, it returns the original `Logger`.
 func (l *Logger) WithGroup(name string) *Logger {
-	text := l.text.WithGroup(name)
-	json := l.json.WithGroup(name)
+	if l.text == nil && l.json == nil {
+		return l
+	}
+
+	var text, json *slog.Logger
+	if l.text != nil {
+		text = l.text.WithGroup(name)
+	}
+	if l.json != nil {
+		json = l.json.WithGroup(name)
+	}
 	return &Logger{text: text, json: json}
 }
 
