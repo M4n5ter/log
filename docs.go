@@ -9,8 +9,12 @@ package log encapsulates the slog package and provides a simpler interface. And 
 	log.Infof("hello %s", "world")
 	log.Warnf("hello %s", "world")
 	log.Errorf("hello world")
+	log.Debug("hello world", "age", 18)
+	log.Info("hello world", "age", 18)
+	log.Warn("hello world", "age", 18)
+	log.Error("hello world", "age", 18)
 
-	l := log.GetLogger()
+	l := log.Default()
 	l.LogAttrs(context.Background(), log.LevelInfo, "hello world", log.Int("age", 22))
 	l.Log(context.Background(), log.LevelInfo, "hello world", "age", 18)
 	l.Debugf("hello %s", "world")

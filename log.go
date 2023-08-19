@@ -125,49 +125,77 @@ func SetLevelError() {
 	levelVar.Set(slog.LevelError)
 }
 
+// Debug logs a debug message.
+//
+//	log.Debug("hello world")
+//	log.Debug("hello world", "age", 18, "name", "foo")
 func Debug(msg string, args ...any) {
 	r := newRecord(slog.LevelDebug, msg)
 	r.Add(args...)
 	handle(nil, r, slog.LevelDebug)
 }
 
+// Info logs an info message.
+//
+//	log.Info("hello world")
+//	log.Info("hello world", "age", 18, "name", "foo")
 func Info(msg string, args ...any) {
 	r := newRecord(slog.LevelInfo, msg)
 	r.Add(args...)
 	handle(nil, r, slog.LevelInfo)
 }
 
+// Warn logs a warn message.
+//
+//	log.Warn("hello world")
+//	log.Warn("hello world", "age", 18, "name", "foo")
 func Warn(msg string, args ...any) {
 	r := newRecord(slog.LevelWarn, msg)
 	r.Add(args...)
 	handle(nil, r, slog.LevelWarn)
 }
 
+// Error logs an error message.
+//
+//	log.Error("hello world")
+//	log.Error("hello world", "age", 18, "name", "foo")
 func Error(msg string, args ...any) {
 	r := newRecord(slog.LevelError, msg)
 	r.Add(args...)
 	handle(nil, r, slog.LevelError)
 }
 
-// Debugf logs and formats a debug message.
+// Debugf logs and formats a debug message. Can't take attributes.
+//
+//	log.Debugf("hello world")
+//	log.Debugf("hello %s", "world")
 func Debugf(format string, args ...any) {
 	r := newRecord(slog.LevelDebug, format, args...)
 	handle(nil, r, slog.LevelDebug)
 }
 
-// Infof logs and formats an info message.
+// Infof logs and formats an info message. Can't take attributes.
+//
+//	log.Infof("hello world")
+//	log.Infof("hello %s", "world")
 func Infof(format string, args ...any) {
 	r := newRecord(slog.LevelInfo, format, args...)
 	handle(nil, r, slog.LevelInfo)
 }
 
-// Warnf logs and formats a warn message.
+// Warnf logs and formats a warn message. Can't take attributes.
+//
+//	log.Warnf("hello world")
+//	log.Warnf("hello %s", "world")
 func Warnf(format string, args ...any) {
 	r := newRecord(slog.LevelWarn, format, args...)
 	handle(nil, r, slog.LevelWarn)
 }
 
-// Errorf logs and formats an error message.
+// Errorf logs and formats an error message. Can't take attributes.
+//
+//	log.Errorf("hello world")
+//	log.Errorf("hello %s", "world")
 func Errorf(format string, args ...any) {
 	r := newRecord(slog.LevelError, format, args...)
 	handle(nil, r, slog.LevelError)
