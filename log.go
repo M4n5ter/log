@@ -125,6 +125,30 @@ func SetLevelError() {
 	levelVar.Set(slog.LevelError)
 }
 
+func Debug(msg string, args ...any) {
+	r := newRecord(slog.LevelDebug, msg)
+	r.Add(args...)
+	handle(nil, r, slog.LevelDebug)
+}
+
+func Info(msg string, args ...any) {
+	r := newRecord(slog.LevelInfo, msg)
+	r.Add(args...)
+	handle(nil, r, slog.LevelInfo)
+}
+
+func Warn(msg string, args ...any) {
+	r := newRecord(slog.LevelWarn, msg)
+	r.Add(args...)
+	handle(nil, r, slog.LevelWarn)
+}
+
+func Error(msg string, args ...any) {
+	r := newRecord(slog.LevelError, msg)
+	r.Add(args...)
+	handle(nil, r, slog.LevelError)
+}
+
 // Debugf logs and formats a debug message.
 func Debugf(format string, args ...any) {
 	r := newRecord(slog.LevelDebug, format, args...)
@@ -152,6 +176,9 @@ func Errorf(format string, args ...any) {
 func newRecord(level slog.Level, format string, args ...any) slog.Record {
 	var pcs [1]uintptr
 	runtime.Callers(3, pcs[:]) // skip [runtime.Callers, this function, this function's caller]
+	if args == nil {
+		return slog.NewRecord(time.Now(), level, format, pcs[0])
+	}
 	return slog.NewRecord(time.Now(), level, fmt.Sprintf(format, args...), pcs[0])
 }
 
