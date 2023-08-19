@@ -165,6 +165,17 @@ func Error(msg string, args ...any) {
 	handle(nil, r, slog.LevelError)
 }
 
+// Panic logs an error message and exit the current program with `1` error code.
+//
+//	log.Panic("hello world")
+//	log.Panic("hello world", "age", 18, "name", "foo")
+func Panic(msg string, args ...any) {
+	r := newRecord(slog.LevelError, msg)
+	r.Add(args...)
+	handle(nil, r, slog.LevelError)
+	os.Exit(1)
+}
+
 // Debugf logs and formats a debug message. Can't take attributes.
 //
 //	log.Debugf("hello world")
@@ -199,6 +210,16 @@ func Warnf(format string, args ...any) {
 func Errorf(format string, args ...any) {
 	r := newRecord(slog.LevelError, format, args...)
 	handle(nil, r, slog.LevelError)
+}
+
+// Panicf logs and formats an error message and exit the current program with `1` error code. Can't take attributes.
+//
+//	log.Panicf("hello world")
+//	log.Panicf("hello %s", "world")
+func Panicf(format string, args ...any) {
+	r := newRecord(slog.LevelError, format, args...)
+	handle(nil, r, slog.LevelError)
+	os.Exit(1)
 }
 
 func newRecord(level slog.Level, format string, args ...any) slog.Record {
