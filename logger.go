@@ -3,6 +3,7 @@ package log
 import (
 	"context"
 	"log/slog"
+	"os"
 )
 
 type Logger struct {
@@ -34,6 +35,13 @@ func (l *Logger) Error(msg string, args ...any) {
 	handle(l, r, slog.LevelError)
 }
 
+func (l *Logger) Panic(msg string, args ...any) {
+	r := newRecord(slog.LevelError, msg)
+	r.Add(args...)
+	handle(l, r, slog.LevelError)
+	os.Exit(1)
+}
+
 func (l *Logger) Debugf(format string, args ...any) {
 	r := newRecord(slog.LevelDebug, format, args...)
 	handle(l, r, slog.LevelDebug)
@@ -52,6 +60,12 @@ func (l *Logger) Warnf(format string, args ...any) {
 func (l *Logger) Errorf(format string, args ...any) {
 	r := newRecord(slog.LevelError, format, args...)
 	handle(l, r, slog.LevelError)
+}
+
+func (l *Logger) Panicf(format string, args ...any) {
+	r := newRecord(slog.LevelError, format, args...)
+	handle(l, r, slog.LevelError)
+	os.Exit(1)
 }
 
 // With works like `slog.Logger.With`.
